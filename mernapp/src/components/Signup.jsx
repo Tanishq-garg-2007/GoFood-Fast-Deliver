@@ -1,0 +1,87 @@
+import React from 'react'
+import { useState } from 'react'
+import {Link,useNavigate} from 'react-router-dom'
+import BlurText from '../Animate/BlurText'
+
+const Signup = () => {
+
+  let navigate = useNavigate();
+  const[credit,setCredit]=useState({name:"",email:"",location:"",password:""});
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/api/creatuser", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credit)
+      });
+  
+      const json = await response.json();
+      console.log(json);
+  
+      if (!json.success) {
+        alert("Enter Valid Credentials");
+      }
+      if(json.success){ 
+      navigate("/login");
+      setCredit({name:"",email:"",location:"",password:""});
+    }
+    } catch (error) {
+      console.error("Fetch error:", error);
+      alert("Failed to connect to the server");
+    }
+  };
+
+  const onchange = (event) =>{
+    setCredit({ ...credit,[event.target.name]:event.target.value})
+  }
+
+  const handleAnimationComplete = () => {
+    console.log('Animation completed!');
+  };
+
+  
+  return (
+    <div style={{minHeight:"90vh",display:"flex",justifyContent:"space-evenly",alignItems:"center"}} className='container'>
+    <div className='Text'>
+    <BlurText
+  text="Sign Up Now !!"
+  delay={200}
+  animateBy="letters"
+  direction="top"
+  onAnimationComplete={handleAnimationComplete}
+  className="mb-8 text-success display-1 fw-bold"
+/>
+
+    </div>
+
+
+    <div className='Input'>
+    <form onSubmit={handleSubmit}>
+    <div className="mb-3">
+    <label htmlFor="exampleFormControlInput1" className="form-label">UserName</label>
+    <input type="text" className="form-control bg-dark" id="exampleFormControlInput1" placeholder="Enter Your Name" name='name' value={credit.name} onChange={onchange}/>
+    </div>
+    <div className="mb-3">
+    <label htmlFor="exampleFormControlInput1" className="form-label">Email address</label>
+    <input type="email" className="form-control bg-dark" id="exampleFormControlInput1" placeholder="Enter Your Email-Id" name='email' value={credit.email} onChange={onchange}/>
+    </div>
+    <div className="mb-3">
+    <label htmlFor="exampleFormControlInput1" className="form-label">Password</label>
+    <input type="password" className="form-control bg-dark" id="exampleFormControlInput1" placeholder="Enter Your Password" name='password' value={credit.password} onChange={onchange}/>
+    </div>
+    <div className="mb-3">
+    <label htmlFor="exampleFormControlInput1" className="form-label">Address</label>
+    <input type="text" className="form-control bg-dark" id="exampleFormControlInput1" placeholder="Enter Your Location" name='location' value={credit.location} onChange={onchange}/>
+    </div>
+    <button type="submit" className='m-3 btn btn-success'>Submit</button>
+    <Link to="/login" className='m-3 btn btn-danger'>Already A User</Link>
+    </form>
+    </div>
+    </div>
+  )
+}
+
+export default Signup
