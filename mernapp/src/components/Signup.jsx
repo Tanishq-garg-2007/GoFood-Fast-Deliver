@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import {Link,useNavigate} from 'react-router-dom'
-import BlurText from '../Animate/BlurText'
+// import BlurText from '../Animate/BlurText'
 
 const Signup = () => {
 
@@ -38,23 +38,15 @@ const Signup = () => {
     setCredit({ ...credit,[event.target.name]:event.target.value})
   }
 
-  const handleAnimationComplete = () => {
-    console.log('Animation completed!');
-  };
+  // const handleAnimationComplete = () => {
+  //   console.log('Animation completed!');
+  // };
 
   
   return (
     <div style={{minHeight:"90vh",display:"flex",justifyContent:"space-evenly",alignItems:"center"}} className='container'>
     <div className='Text'>
-    <BlurText
-  text="Sign Up Now !!"
-  delay={200}
-  animateBy="letters"
-  direction="top"
-  onAnimationComplete={handleAnimationComplete}
-  className="mb-8 text-success display-1 fw-bold"
-/>
-
+    <p className='text-success' style={{fontWeight:"500",fontSize:"2vw"}}>New To <strong style={{fontSize:"3vh",fontWeight:"700"}}>GOFOOD ??<br /></strong><strong style={{fontSize:"10vh",fontWeight:"900"}}>SignUp Now!! <br /></strong>For Better Experience</p>
     </div>
 
 
